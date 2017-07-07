@@ -7,20 +7,20 @@ import javax.persistence.Id;
 public class SmartMeter {
 
 	 @Id
-	 String kennung;
+	 String id;
 
-	public SmartMeter(String kennung) {
+	public SmartMeter(String id) {
 		super();
-		this.kennung = kennung;
+		this.id = id;
 	}
 	
 	public SmartMeter(){}
 
-	public String getKennung() {
-		return kennung;
+	public String getId() {
+		return id;
 	}
 
-	public void setKennung(String kennung) {
-		this.kennung = kennung;
+	public void setId(String id) {
+		this.id = id;
 	}
 }
