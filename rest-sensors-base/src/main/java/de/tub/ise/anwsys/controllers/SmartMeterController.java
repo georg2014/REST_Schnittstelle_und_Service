@@ -47,16 +47,19 @@ public class SmartMeterController {
 		return repository.save(s);
 	}
 	
+	//should it be possible to change the id?
+	/*
 	@RequestMapping(method=RequestMethod.PUT, value="/{id}")
 	public SmartMeter updateSmartMeter(@RequestBody SmartMeter s, @PathVariable String id){
 		List<SmartMeter> smartMeter = repository.findById(id);
 		((SmartMeter) smartMeter).setId(s.getId());
 		return (SmartMeter) repository.save(smartMeter);
 	}
+	*/
 	
-	@RequestMapping(method=RequestMethod.DELETE, value="/{name}")
-	public void deleteUser(@PathVariable String name){
-		repository.delete(name);
+	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
+	public void deleteSmartMeter(@PathVariable String id){
+		repository.delete(id);
 	}
 
 }

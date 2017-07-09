@@ -2,11 +2,10 @@ package de.tub.ise.anwsys.repos;
 
 import java.util.List;
 
-import org.springframework.data.repository.CrudRepository;
-
+import org.springframework.data.jpa.repository.JpaRepository;
 import de.tub.ise.anwsys.models.SmartMeter;
 
-public interface SmartMeterRepository extends CrudRepository<SmartMeter, String>{
+public interface SmartMeterRepository extends JpaRepository<SmartMeter, String>{
 	List<SmartMeter> findById(String id);
 
 }
