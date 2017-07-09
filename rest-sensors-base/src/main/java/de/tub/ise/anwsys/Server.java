@@ -21,14 +21,16 @@ public class Server {
     
     /*********************************FOR TESTING:START*******************************/
     @Bean
-	CommandLineRunner init(SmartMeterRepository smR, MetricRepository mR, MeasurementRepository measR) {
+	CommandLineRunner init(SmartMeterRepository smR, MetricRepository mR, MearsurementRepository measR) {
 		return (evt) -> Arrays.asList(
 				"SM_jhoeller,SM_dsyer,SM_pwebb,SM_ogierke,SM_rwinch,SM_mfisher,SM_mpollack,SM_jlong".split(","))
 				.forEach(
 						a -> {
 							SmartMeter sm = smR.save(new SmartMeter(a));
-							Metric mc = mR.save(sm, "Current(mA)");
-							
+							Metric mc = mR.save(new Metric(sm, "Current(mA)"));
+							Metric mv = mR.save(new Metric(sm, "Voltage(V)"));
+							measR.save(new Measurement(mc, 123456,  247.9875));
+							measR.save(new Measurement(mv, 123456,  555.555555));
 						});
 	}
     /*********************************FOR TESTING:END*********************************/
