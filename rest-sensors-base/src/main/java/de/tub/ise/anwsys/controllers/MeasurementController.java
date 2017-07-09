@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.tub.ise.anwsys.models.SmartMeter;
+import de.tub.ise.anwsys.repos.MearsurementRepository;
 import de.tub.ise.anwsys.repos.SmartMeterRepository;
 
 @RestController
 public class MeasurementController {
 	
-	@Autowired MeasurementRepository;
+	@Autowired MearsurementRepository measrep;
 	
 }
