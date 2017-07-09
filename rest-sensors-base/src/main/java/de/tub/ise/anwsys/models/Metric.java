@@ -1,58 +1,74 @@
 package de.tub.ise.anwsys.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.List;
 
-/**
- * @author G St
- *
- */
+import javax.persistence.*;
+
 @Entity
-public class Metric {
+public class Metric implements Serializable {
+	
+	private static final long serialVersionUID = 3025270242924152998L;
 	
 	//attributes
 	@Id
 	@GeneratedValue
+	@Column
 	Integer id;
-	String text;
-	Measurements data;
+	
+	//The measured variable
+	@Column
+	String measvar;
+	
+	//Reference to the corresponding Smart Meter
+	@ManyToOne
+	@JoinColumn
+	SmartMeter sm;
+	
+	//Reference to the corresponding measurements for this variable
+	@OneToMany(mappedBy = "met")
+	List<Measurement> data;
 	
 	//constructors
-	/**
-	 * @param text as String
-	 * @param data as Measurements
-	 */
-	public Metric(String text, Measurements data) {
-		this.text = text;
-		this.data = data;
+	public Metric(){
+		
 	}
-	public Metric() {
+	
+	public Metric(SmartMeter sm, String measvar){
+		
+		this.measvar = measvar;
+		this.sm = sm;
+		
+	}
+	
+	//getters setters
+	public String getMeasvar() {
+		return measvar;
 	}
 
-	//getters and setters
-	/**
-	 * @return as String
-	 */
-	public String getText() {
-		return text;
+	public void setMeasvar(String measvar) {
+		this.measvar = measvar;
 	}
-	/**
-	 * @param text as String
-	 */
-	public void setText(String text) {
-		this.text = text;
-	}
-	/**
-	 * @return as Measurements
-	 */
-	public Measurements getData() {
+
+	public List<Measurement> getData() {
 		return data;
 	}
-	/**
-	 * @param data as Measurements
-	 */
-	public void setData(Measurements data) {
+
+	public void setData(List<Measurement> data) {
 		this.data = data;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public SmartMeter getSm() {
+		return sm;
+	}
+	
+
 }

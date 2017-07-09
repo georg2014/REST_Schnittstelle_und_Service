@@ -1,122 +1,46 @@
-<<<<<<< HEAD
 package de.tub.ise.anwsys.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import java.io.Serializable;
+import java.util.List;
 
-/**
- * @author G St
- *
- */
+import javax.persistence.*;
+
 @Entity
-public class SmartMeter {
+public class SmartMeter implements Serializable {
 	
+	private static final long serialVersionUID = 7803824012042165639L;
+
 	//attributes
 	@Id
-	@GeneratedValue
+	@Column
 	String id;
-	@OneToMany(mappedBy = "text")//TODO mappedBy value not so sure!
-	Metric metric;
-	 
+	
+	@OneToMany(mappedBy = "sm")
+	List<Metric> metric;
+	
 	//constructors
-	/**
-	 * @param id
-	 * @param metric as Metric
-	 */
-	public SmartMeter(String id, Metric metric) {
+	public SmartMeter(){}
+	
+	public SmartMeter(String id){
 		this.id = id;
-		this.metric = metric;
 	}
 	
-	public SmartMeter(){}
+	//getter setters
+	public List<Metric> getMetric() {
+		return metric;
+	}
 
-	
-	//getters and setters
+	public void setMetric(List<Metric> metric) {
+		this.metric = metric;
+	}
 
-	/**
-	 * @return id as String
-	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public String getId() {
 		return id;
 	}
-	/**
-	 * @param id as String
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
-	
-	/**
-	 * @return as Metric
-	 */
-	public Metric getMetric() {
-		return metric;
-	}
+
 	
 }
-=======
-package de.tub.ise.anwsys.models;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
-/**
- * @author G St
- *
- */
-@Entity
-public class SmartMeter {
-	
-	//attributes
-	@Id
-	@GeneratedValue
-	String id;
-	@OneToMany(mappedBy = "text")//TODO mappedBy value not so sure!
-	Metric metric;
-	 
-	//constructors
-	/**
-	 * @param id
-	 * @param metric as Metric
-	 */
-	public SmartMeter(Metric metric) {
-		this.metric = metric;
-	}
-	
-	public SmartMeter(){}
-
-	
-	//getters and setters
-
-	/**
-	 * @return id as String
-	 */
-	public String getId() {
-		return id;
-	}
-	/**
-	 * @param id as String
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
-	
-	/**
-	 * @return as Metric
-	 */
-	public Metric getMetric() {
-		return metric;
-	}
-	/**
-	 * @param metric as Metric
-	 */
-	public void setMetric(Metric metric) {
-		this.metric = metric;
-	}
-	
-}
->>>>>>> origin/GeorgsBranchPlayAround1ToModelAfterClassDiagramm10
