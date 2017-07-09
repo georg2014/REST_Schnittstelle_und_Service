@@ -15,6 +15,7 @@ import de.tub.ise.anwsys.repos.MearsurementRepository;
 import de.tub.ise.anwsys.repos.SmartMeterRepository;
 
 @RestController
+@RequestMapping("/measurement")
 public class MeasurementController {
 	
 	@Autowired MearsurementRepository measrep;

@@ -14,6 +14,7 @@ import de.tub.ise.anwsys.models.SmartMeter;
 import de.tub.ise.anwsys.repos.SmartMeterRepository;
 
 @RestController
+@RequestMapping("/smartMeter")
 public class SmartMeterController {
 	
 	@Autowired
@@ -31,8 +32,12 @@ public class SmartMeterController {
 //		}
 //	}
 	
-	
 	@RequestMapping(method=RequestMethod.GET)
+	public String start() {
+		return String.format("Willkommen auf der SmartMeter Seite!    /all -> alle SmartMeter");
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, value="/all")
 	public List<SmartMeter> getAllSmartMeter(){
 		return (List<SmartMeter>) smRepo.findAll(); 
 	}

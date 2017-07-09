@@ -21,7 +21,7 @@ public class Server {
     
     /*********************************FOR TESTING:START*******************************/
     @Bean
-	CommandLineRunner init(SmartMeterRepository smR, MetricRepository mR, MearsurementRepository measR) {
+	CommandLineRunner init(SmartMeterRepository smR) {
 		return (evt) -> Arrays.asList(
 				"SM_jhoeller,SM_dsyer".split(","))
 				.forEach(
