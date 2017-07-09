@@ -23,7 +23,7 @@ public class Server {
     @Bean
 	CommandLineRunner init(SmartMeterRepository smR, MetricRepository mR, MearsurementRepository measR) {
 		return (evt) -> Arrays.asList(
-				"SM_jhoeller,SM_dsyer,SM_pwebb,SM_ogierke,SM_rwinch,SM_mfisher,SM_mpollack,SM_jlong".split(","))
+				"SM_jhoeller,SM_dsyer".split(","))
 				.forEach(
 						a -> {
 							SmartMeter sm = smR.save(new SmartMeter(a));
@@ -33,5 +33,6 @@ public class Server {
 							measR.save(new Measurement(mv, 123456,  555.555555));
 						});
 	}
+    //,SM_pwebb,SM_ogierke,SM_rwinch,SM_mfisher,SM_mpollack,SM_jlong
     /*********************************FOR TESTING:END*********************************/
 }
