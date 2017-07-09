@@ -45,6 +45,10 @@ public class Measurement implements Serializable {
 		return serialVersionUID;
 	}
 
+	public double getValue() {
+		return value;
+	}
+
 	public String getId() {
 		return measurementId;
 	}
