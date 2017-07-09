@@ -30,14 +30,13 @@ public class Metric implements Serializable {
 	List<Measurement> data;
 	
 	//constructors
-	public Metric(){
-		
-	}
-	
 	public Metric(SmartMeter sm, String measvar){
 		
 		this.measvar = measvar;
 		this.sm = sm;
+		
+	}
+	public Metric(){
 		
 	}
 	

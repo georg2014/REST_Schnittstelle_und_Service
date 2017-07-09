@@ -27,10 +27,10 @@ public class Server {
 				.forEach(
 						a -> {
 							SmartMeter sm = smR.save(new SmartMeter(a));
-							Metric mc = mR.save(new Metric(sm, "Current(mA)"));
-							Metric mv = mR.save(new Metric(sm, "Voltage(V)"));
-							measR.save(new Measurement(mc, 123456,  247.9875));
-							measR.save(new Measurement(mv, 123456,  555.555555));
+							//Metric mc = mR.save(new Metric(sm, "Current(mA)"));
+							//Metric mv = mR.save(new Metric(sm, "Voltage(V)"));
+							//measR.save(new Measurement(mc, 123456,  247.9875));
+							//measR.save(new Measurement(mv, 123456,  555.555555));
 						});
 	}
     //,SM_pwebb,SM_ogierke,SM_rwinch,SM_mfisher,SM_mpollack,SM_jlong
