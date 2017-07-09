@@ -24,8 +24,7 @@ public class SmartMeter {
 	 * @param id
 	 * @param metric as Metric
 	 */
-	public SmartMeter(String id, Metric metric) {
-		this.id = id;
+	public SmartMeter(Metric metric) {
 		this.metric = metric;
 	}
 	
@@ -52,6 +51,12 @@ public class SmartMeter {
 	 */
 	public Metric getMetric() {
 		return metric;
+	}
+	/**
+	 * @param metric as Metric
+	 */
+	public void setMetric(Metric metric) {
+		this.metric = metric;
 	}
 	
 }
