@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import de.tub.ise.anwsys.models.SmartMeter;
 
 public interface SmartMeterRepository extends JpaRepository<SmartMeter, String>{
-	List<SmartMeter> findById(String id);
+	
+	List<SmartMeter> findByMeterId(String meterId);
 
 }

@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.tub.ise.anwsys.models.SmartMeter;
@@ -19,38 +18,15 @@ public class SmartMeterController {
 	
 	@Autowired
 	SmartMeterRepository smRepo;
-		
-//	@RequestMapping(method=RequestMethod.GET, path="/hello2")
-//	public String answerAndRegister(@RequestParam(value = "smartmeter", defaultValue = "AnwSys SmartMeter") String id) {
-//		List<SmartMeter> foundSmartMeter = smRepo.findById(id);
-//		if (!foundSmartMeter.isEmpty()) {
-//			return String.format("New SmartMeter, %s.", foundSmartMeter.get(0).getId());
-//		} else {
-//			SmartMeter s = new SmartMeter(id);
-//			smRepo.save(s);
-//			return String.format("New SmartMeter %s!", s.getId());
-//		}
-//	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public String start() {
-		return String.format("Willkommen auf der SmartMeter Seite!    /all -> alle SmartMeter");
-	}
-	
-	@RequestMapping(method=RequestMethod.GET, value="/all")
 	public List<SmartMeter> getAllSmartMeter(){
 		return (List<SmartMeter>) smRepo.findAll(); 
 	}
 	
-	@RequestMapping(method=RequestMethod.GET, value="/{id}")
-	public SmartMeter getSingleSmartmeter(@PathVariable String id){
-		return smRepo.findOne(id);
-	}
-	
 	@RequestMapping(method=RequestMethod.POST)
 	public SmartMeter createSmartMeter(@RequestBody SmartMeter smartMeter){
-		SmartMeter s = new SmartMeter(smartMeter.getId());
-		return smRepo.save(s);
+		return smRepo.save(new SmartMeter(smartMeter.getSmId()));
 	}
 	
 	//should it be possible to change the id?
@@ -63,9 +39,9 @@ public class SmartMeterController {
 	}
 	*/
 	
-	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
-	public void deleteSmartMeter(@PathVariable String id){
-		smRepo.delete(id);
+	@RequestMapping(method=RequestMethod.DELETE, value="/{meterId}")
+	public void deleteSmartMeter(@PathVariable String meterId){
+		smRepo.delete(meterId);
 	}
 
 }

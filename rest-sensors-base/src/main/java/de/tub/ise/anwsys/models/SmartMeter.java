@@ -2,8 +2,11 @@ package de.tub.ise.anwsys.models;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class SmartMeter implements Serializable {
@@ -12,17 +15,20 @@ public class SmartMeter implements Serializable {
 
 	//attributes
 	@Id
-	@Column
-	String id;
+	String meterId;
 	
-	@OneToMany(mappedBy = "sm")
+	@JsonIgnore
+	@ManyToMany(mappedBy="sm")
 	List<Metric> metric;
+	
+	@OneToMany(mappedBy="smart")
+	List<Measurement> meas;
 	
 	//constructors
 	public SmartMeter(){}
 	
-	public SmartMeter(String id){
-		this.id = id;
+	public SmartMeter(String smId){
+		this.meterId = smId;
 	}
 	
 	//getter setters
@@ -38,8 +44,8 @@ public class SmartMeter implements Serializable {
 		return serialVersionUID;
 	}
 
-	public String getId() {
-		return id;
+	public String getSmId() {
+		return meterId;
 	}
 
 	

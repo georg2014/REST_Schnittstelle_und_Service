@@ -7,38 +7,40 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.tub.ise.anwsys.models.Metric;
-import de.tub.ise.anwsys.models.SmartMeter;
 import de.tub.ise.anwsys.repos.MetricRepository;
-import de.tub.ise.anwsys.repos.SmartMeterRepository;
 
 @RestController
-@RequestMapping("/metric")
+@RequestMapping("/smartMeter/{smId}")
 public class MetricController {
-	
-	@Autowired MetricRepository metrep;
-	
-	@RequestMapping(method=RequestMethod.GET)
-	public List<Metric> getAllMetric(){
-		return (List<Metric>) metrep.findAll();
+
+	@Autowired
+	MetricRepository metrep;
+
+	@RequestMapping(method = RequestMethod.GET)
+	public List<Metric> getSmartMeterMetrics(@PathVariable String smId) {
+		return (List<Metric>) metrep.findBySmMeterId(smId);
 	}
-	
-	@RequestMapping(method=RequestMethod.GET, value="/{id}")
-	public Metric getSingleMetric(@PathVariable String id){
-		return metrep.findOne(id);
+
+	@RequestMapping(method = RequestMethod.POST)
+	public Metric createMetric(@RequestBody Metric metric) {
+		if (!metrep.exists(metric.getMetId())) {
+			return metrep.save(new Metric(metric.getSm(), metric.getMeasvar()));
+		} else {
+			return null;
+		}
 	}
-	
-	@RequestMapping(method=RequestMethod.POST)
-	public Metric createMetric(@RequestBody Metric metric){
-		return metrep.save(metric);
-	}
-	
-	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
-	public void deleteMetric(@PathVariable String id){
-		metrep.delete(id);
+
+//	@RequestMapping(method=RequestMethod.PUT)
+//	public Metric updateMetric(@RequestBody Metric metric){
+//		return metrep.
+//	}
+
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{metId}")
+	public void deleteMetric(@PathVariable String metId) {
+		metrep.delete(metId);
 	}
 
 }
