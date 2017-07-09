@@ -9,28 +9,29 @@ import de.tub.ise.anwsys.models.*;
 import de.tub.ise.anwsys.repos.*;
 
 @RestController
-@RequestMapping("/metrics")
+
+@RequestMapping("/metric")
 public class MetricController {
 	
 	@Autowired MetricRepository metrep;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public List<Metric> getAllMetric(){
-		return (List<Metric>) metrep.findAll(); 
+		return (List<Metric>) metrep.findAll();
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, value="/{id}")
-	public Metric getSingleSmartmeter(@PathVariable String id){
+	public Metric getSingleMetric(@PathVariable String id){
 		return metrep.findOne(id);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public Metric createSmartMeter(@RequestBody Metric metric){
+	public Metric createMetric(@RequestBody Metric metric){
 		return metrep.save(metric);
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
-	public void deleteSmartMeter(@PathVariable String id){
+	public void deleteMetric(@PathVariable String id){
 		metrep.delete(id);
 	}
 

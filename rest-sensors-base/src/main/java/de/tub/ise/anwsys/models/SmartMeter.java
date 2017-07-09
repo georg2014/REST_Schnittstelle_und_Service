@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class SmartMeter implements Serializable {
 	
@@ -15,6 +17,7 @@ public class SmartMeter implements Serializable {
 	@Column
 	String id;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "sm")
 	List<Metric> metric;
 	

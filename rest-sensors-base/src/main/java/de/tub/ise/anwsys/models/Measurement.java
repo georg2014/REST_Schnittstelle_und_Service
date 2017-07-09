@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Measurement implements Serializable {
 
@@ -16,6 +18,7 @@ public class Measurement implements Serializable {
 	@Column
 	String id;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn
 	Metric met;

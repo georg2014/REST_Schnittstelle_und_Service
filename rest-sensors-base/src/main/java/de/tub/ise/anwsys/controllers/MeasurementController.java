@@ -9,8 +9,9 @@ import de.tub.ise.anwsys.models.*;
 import de.tub.ise.anwsys.repos.*;
 
 @RestController
+@RequestMapping("/measurement")
 public class MeasurementController {
 	
-	@Autowired MearsurementRepository measrep;
+	@Autowired MeasurementRepository measrep;
 	
 }

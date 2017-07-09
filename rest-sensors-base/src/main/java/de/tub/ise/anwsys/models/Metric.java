@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Metric implements Serializable {
 	
@@ -21,11 +23,13 @@ public class Metric implements Serializable {
 	String measvar;
 	
 	//Reference to the corresponding Smart Meter
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn
 	SmartMeter sm;
 	
 	//Reference to the corresponding measurements for this variable
+	@JsonIgnore
 	@OneToMany(mappedBy = "met")
 	List<Measurement> data;
 	
@@ -69,5 +73,4 @@ public class Metric implements Serializable {
 		return sm;
 	}
 	
-
 }

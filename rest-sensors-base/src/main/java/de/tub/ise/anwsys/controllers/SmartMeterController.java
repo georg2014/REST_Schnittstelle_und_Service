@@ -5,17 +5,22 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import de.tub.ise.anwsys.models.SmartMeter;
-import de.tub.ise.anwsys.repos.SmartMeterRepository;
+import de.tub.ise.anwsys.models.*;
+import de.tub.ise.anwsys.repos.*;
 
 @RestController
-@RequestMapping("/smartmeters")
+@RequestMapping("/smartMeter")
 public class SmartMeterController {
 	
 	@Autowired
 	SmartMeterRepository smRepo;
 	
 	@RequestMapping(method=RequestMethod.GET)
+	public String start() {
+		return String.format("Willkommen auf der SmartMeter Seite!    /all -> alle SmartMeter");
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, value="/all")
 	public List<SmartMeter> getAllSmartMeter(){
 		return (List<SmartMeter>) smRepo.findAll(); 
 	}
