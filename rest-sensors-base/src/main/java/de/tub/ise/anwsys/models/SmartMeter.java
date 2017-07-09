@@ -29,25 +29,11 @@ public class SmartMeter {
 		this.metric = metric;
 	}
 	
-	/**
-	 * @param metric as Metric
-	 */
-	public SmartMeter(Metric metric) {
-		this.metric = metric;
-	}
-
-		//old
-		/**
-		 * @param id
-		 */
-		public SmartMeter(String id) {
-			this.id = id;
-		}
-	
 	public SmartMeter(){}
 
-	//getters and setters
 	
+	//getters and setters
+
 	/**
 	 * @return id as String
 	 */
@@ -62,16 +48,10 @@ public class SmartMeter {
 	}
 	
 	/**
-	 * @return
+	 * @return as Metric
 	 */
 	public Metric getMetric() {
 		return metric;
-	}
-	/**
-	 * @param metric as Metric
-	 */
-	public void setMetric(Metric metric) {
-		this.metric = metric;
 	}
 	
 }

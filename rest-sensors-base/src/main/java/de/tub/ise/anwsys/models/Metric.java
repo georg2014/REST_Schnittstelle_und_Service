@@ -3,6 +3,10 @@ package de.tub.ise.anwsys.models;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+/**
+ * @author G St
+ *
+ */
 @Entity
 public class Metric {
 	
@@ -13,8 +17,8 @@ public class Metric {
 	
 	//constructors
 	/**
-	 * @param text
-	 * @param data
+	 * @param text as String
+	 * @param data as Measurements
 	 */
 	public Metric(String text, Measurements data) {
 		super();
@@ -22,7 +26,6 @@ public class Metric {
 		this.data = data;
 	}
 	public Metric() {
-		super();
 	}
 	
 }
