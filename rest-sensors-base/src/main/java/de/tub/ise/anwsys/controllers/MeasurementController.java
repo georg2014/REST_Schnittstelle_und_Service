@@ -12,6 +12,11 @@ import de.tub.ise.anwsys.repos.*;
 @RequestMapping("/measurement")
 public class MeasurementController {
 	
-	@Autowired MeasurementRepository measrep;
+	@Autowired MeasurementRepository measRepo;
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public List<Measurement> getAllMetric(){
+		return (List<Measurement>) measRepo.findAll();
+	}
 	
 }

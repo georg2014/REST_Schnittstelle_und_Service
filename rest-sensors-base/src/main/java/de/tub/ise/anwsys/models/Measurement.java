@@ -16,7 +16,7 @@ public class Measurement implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column
-	String id;
+	String measurementId;
 	
 	@JsonIgnore
 	@ManyToOne
@@ -46,7 +46,7 @@ public class Measurement implements Serializable {
 	}
 
 	public String getId() {
-		return id;
+		return measurementId;
 	}
 
 	public Metric getMet() {

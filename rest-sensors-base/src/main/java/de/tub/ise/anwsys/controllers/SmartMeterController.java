@@ -17,7 +17,9 @@ public class SmartMeterController {
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String start() {
-		return String.format("Willkommen auf der SmartMeter Seite!    /all -> alle SmartMeter");
+		return String.format("Willkommen auf der SmartMeter Seite!  "
+				+ "<br>  /all -> alle SmartMeter"
+				+ "<br>  /{id} -> SmartMeter mit der {id}");
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, value="/all")

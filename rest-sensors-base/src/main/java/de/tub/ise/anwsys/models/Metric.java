@@ -16,7 +16,7 @@ public class Metric implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column
-	Integer id;
+	String metricId;
 	
 	//The measured variable
 	@Column
@@ -65,8 +65,8 @@ public class Metric implements Serializable {
 		return serialVersionUID;
 	}
 
-	public Integer getId() {
-		return id;
+	public String getId() {
+		return metricId;
 	}
 
 	public SmartMeter getSm() {
