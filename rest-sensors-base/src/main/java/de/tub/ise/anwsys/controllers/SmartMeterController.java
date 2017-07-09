@@ -17,49 +17,50 @@ import de.tub.ise.anwsys.repos.SmartMeterRepository;
 public class SmartMeterController {
 	
 	@Autowired
-	SmartMeterRepository repository;
+	SmartMeterRepository smRepo;
 		
-	@RequestMapping(method=RequestMethod.GET, path="/hello2")
-	public String answerAndRegister(@RequestParam(value = "smartmeter", defaultValue = "AnwSys SmartMeter") String id) {
-		List<SmartMeter> foundSmartMeter = repository.findById(id);
-		if (!foundSmartMeter.isEmpty()) {
-			return String.format("New SmartMeter, %s.", foundSmartMeter.get(0).getId());
-		} else {
-			SmartMeter s = new SmartMeter(id);
-			repository.save(s);
-			return String.format("New SmartMeter %s!", s.getId());
-		}
-	}
+//	@RequestMapping(method=RequestMethod.GET, path="/hello2")
+//	public String answerAndRegister(@RequestParam(value = "smartmeter", defaultValue = "AnwSys SmartMeter") String id) {
+//		List<SmartMeter> foundSmartMeter = smRepo.findById(id);
+//		if (!foundSmartMeter.isEmpty()) {
+//			return String.format("New SmartMeter, %s.", foundSmartMeter.get(0).getId());
+//		} else {
+//			SmartMeter s = new SmartMeter(id);
+//			smRepo.save(s);
+//			return String.format("New SmartMeter %s!", s.getId());
+//		}
+//	}
 	
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public List<SmartMeter> getAllSmartMeter(){
-		return (List<SmartMeter>) repository.findAll(); 
+		return (List<SmartMeter>) smRepo.findAll(); 
 	}
+	
 	@RequestMapping(method=RequestMethod.GET, value="/{id}")
-	public List<SmartMeter> getSmartmeter(@PathVariable String id){
-		return repository.findById(id);
+	public SmartMeter getSingleSmartmeter(@PathVariable String id){
+		return smRepo.findOne(id);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public SmartMeter createSmartMeter(@RequestBody SmartMeter smartMeter){
 		SmartMeter s = new SmartMeter(smartMeter.getId());
-		return repository.save(s);
+		return smRepo.save(s);
 	}
 	
 	//should it be possible to change the id?
 	/*
 	@RequestMapping(method=RequestMethod.PUT, value="/{id}")
 	public SmartMeter updateSmartMeter(@RequestBody SmartMeter s, @PathVariable String id){
-		List<SmartMeter> smartMeter = repository.findById(id);
+		List<SmartMeter> smartMeter = smRepo.findById(id);
 		((SmartMeter) smartMeter).setId(s.getId());
-		return (SmartMeter) repository.save(smartMeter);
+		return (SmartMeter) smRepo.save(smartMeter);
 	}
 	*/
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
 	public void deleteSmartMeter(@PathVariable String id){
-		repository.delete(id);
+		smRepo.delete(id);
 	}
 
 }
