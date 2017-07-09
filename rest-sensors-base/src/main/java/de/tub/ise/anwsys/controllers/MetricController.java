@@ -9,7 +9,6 @@ import de.tub.ise.anwsys.models.*;
 import de.tub.ise.anwsys.repos.*;
 
 @RestController
-
 @RequestMapping("/metric")
 public class MetricController {
 	
