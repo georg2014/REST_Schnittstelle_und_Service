@@ -6,8 +6,11 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+<<<<<<< HEAD
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+=======
+>>>>>>> branch 'GeorgsBranchPlayAround1ToModelAfterClassDiagramm10' of https://github.com/georg2014/REST_Schnittstelle_und_Service.git
 
 @Entity
 public class Measurement implements Serializable {
@@ -17,12 +20,20 @@ public class Measurement implements Serializable {
 	//Attributes
 	@Id
 	@GeneratedValue
+<<<<<<< HEAD
 	String measId;
+=======
+	@Column
+	String measurementId;
+>>>>>>> branch 'GeorgsBranchPlayAround1ToModelAfterClassDiagramm10' of https://github.com/georg2014/REST_Schnittstelle_und_Service.git
 	
+<<<<<<< HEAD
 	long timestamp;
 	
 	double value;
 	
+=======
+>>>>>>> branch 'GeorgsBranchPlayAround1ToModelAfterClassDiagramm10' of https://github.com/georg2014/REST_Schnittstelle_und_Service.git
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn
@@ -50,8 +61,17 @@ public class Measurement implements Serializable {
 		return serialVersionUID;
 	}
 
+<<<<<<< HEAD
 	public String getmeasId() {
 		return measId;
+=======
+	public double getValue() {
+		return value;
+	}
+
+	public String getId() {
+		return measurementId;
+>>>>>>> branch 'GeorgsBranchPlayAround1ToModelAfterClassDiagramm10' of https://github.com/georg2014/REST_Schnittstelle_und_Service.git
 	}
 
 	public Metric getMet() {
