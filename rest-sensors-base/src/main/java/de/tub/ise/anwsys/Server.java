@@ -32,10 +32,8 @@ public class Server {
         metrics.add(mc);
         metrics.add(mv);
         
-    	return (evt) -> Arrays.asList(
-       "01,02".split(","))
-       .forEach(
-         a -> {
+    	return (evt) -> Arrays.asList("01,02".split(",")).forEach(a -> 
+    	{
           SmartMeter sm = smRepo.save(new SmartMeter(a, metrics));
           measR.save(new Measurement(mc, sm, 123456,  247.9875));
           measR.save(new Measurement(mv, sm, 123456,  555.555555));

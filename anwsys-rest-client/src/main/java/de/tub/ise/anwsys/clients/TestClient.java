@@ -1,12 +1,6 @@
 package de.tub.ise.anwsys.clients;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import com.mashape.unirest.http.*;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
@@ -15,8 +9,8 @@ public class TestClient {
 	public static void main(String[] args) throws IOException, UnirestException {
 		
 		String url = "http://localhost:7878/meters";
-//		HttpResponse<String> response = Unirest.get(url).asString();
-//		System.out.println(String.format("Localhost:7878's status code was: %d", response.getStatus()));
+		HttpResponse<String> response = Unirest.get(url).asString();
+		System.out.println(String.format("Localhost:7878's status code was: %d", response.getStatus()));
 		
 		//CRUD
 		//create via post
@@ -33,8 +27,8 @@ public class TestClient {
 			+ "Entity:\n"+Unirest.get(url).asJson().getRawBody().toString()
 			);
 		
-		JSONArray JArray =  Unirest.get(url).asJson();
-		JSONObject json_array = JArray.optJSONObject(0);
+	/*	JSONArray args =  Unirest.get(url).asJson();
+		JSONObject json_array = args.optJSONObject(0);
 
 		Iterator<?> keys = json_array.keys();
 
@@ -42,7 +36,7 @@ public class TestClient {
 		    String key = (String) keys.next();
 		    System.out.println("Key: " + key);
 		    System.out.println("Value: " + json_array.get(key));
-		}
+		}*/
 		//update via put
 		//delete via delete
 		
