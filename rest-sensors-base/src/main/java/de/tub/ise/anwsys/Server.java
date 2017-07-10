@@ -22,6 +22,7 @@ public class Server {
     }
     
     /*********************************FOR TESTING:START*******************************/
+<<<<<<< HEAD
     @Bean
     CommandLineRunner init(SmartMeterRepository smRepo, MetricRepository mRepo, MearsurementRepository measR) {
     	
@@ -41,6 +42,21 @@ public class Server {
           measR.save(new Measurement(mv, sm, 123456,  555.555555));
          });
     }
+=======
+    @Bean
+	CommandLineRunner init(SmartMeterRepository smRepo, MetricRepository mRepo, MeasurementRepository measR) {
+		return (evt) -> Arrays.asList(
+				"SM_jhoeller,SM_dsyer".split(","))
+				.forEach(
+						a -> {
+							SmartMeter sm = smRepo.save(new SmartMeter(a));
+							Metric mc = mRepo.save(new Metric(sm, "Current(mA)"));
+							Metric mv = mRepo.save(new Metric(sm, "Voltage(V)"));
+							measR.save(new Measurement(mc, 123456,  247.9875));
+							measR.save(new Measurement(mv, 123456,  555.555555));
+						});
+	}
+>>>>>>> branch 'GeorgsBranchPlayAround1ToModelAfterClassDiagramm10' of https://github.com/georg2014/REST_Schnittstelle_und_Service.git
     //,SM_pwebb,SM_ogierke,SM_rwinch,SM_mfisher,SM_mpollack,SM_jlong
     /*********************************FOR TESTING:END*********************************/
 }

@@ -6,6 +6,8 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class SmartMeter implements Serializable {
 	
@@ -16,8 +18,17 @@ public class SmartMeter implements Serializable {
 	@Column
 	String meterId;
 	
+<<<<<<< HEAD
 	@ManyToMany
 	@JoinTable
+=======
+	@JsonIgnore
+<<<<<<< HEAD
+	@ManyToMany(mappedBy="sm")
+=======
+	@OneToMany(mappedBy = "sm")
+>>>>>>> branch 'GeorgsBranchPlayAround1ToModelAfterClassDiagramm10' of https://github.com/georg2014/REST_Schnittstelle_und_Service.git
+>>>>>>> origin/GeorgsBranchPlayAround1ToModelAfterClassDiagramm10
 	List<Metric> metric;
 	
 	@JsonIgnore
