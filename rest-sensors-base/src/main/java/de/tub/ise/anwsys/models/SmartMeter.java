@@ -2,8 +2,6 @@ package de.tub.ise.anwsys.models;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,25 +13,36 @@ public class SmartMeter implements Serializable {
 
 	//attributes
 	@Id
+	@Column
 	String meterId;
 	
-	@JsonIgnore
-	@ManyToMany(mappedBy="sm")
+	@ManyToMany
+	@JoinTable
 	List<Metric> metric;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="smart")
 	List<Measurement> meas;
 	
 	//constructors
 	public SmartMeter(){}
 	
-	public SmartMeter(String smId){
+	public SmartMeter(String smId, List<Metric> metric){
 		this.meterId = smId;
+		this.metric = metric;
 	}
 	
 	//getter setters
 	public List<Metric> getMetric() {
 		return metric;
+	}
+
+	public List<Measurement> getMeas() {
+		return meas;
+	}
+
+	public void setMeas(List<Measurement> meas) {
+		this.meas = meas;
 	}
 
 	public void setMetric(List<Metric> metric) {
@@ -44,7 +53,7 @@ public class SmartMeter implements Serializable {
 		return serialVersionUID;
 	}
 
-	public String getSmId() {
+	public String getMeterId() {
 		return meterId;
 	}
 

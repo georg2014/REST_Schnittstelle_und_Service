@@ -1,13 +1,9 @@
 package de.tub.ise.anwsys.models;
 
 import java.io.Serializable;
-import java.util.List;
-
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
 public class Measurement implements Serializable {
@@ -16,8 +12,8 @@ public class Measurement implements Serializable {
 	
 	//Attributes
 	@Id
-	@GeneratedValue
-	String measId;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	long measId;
 	
 	long timestamp;
 	
@@ -42,7 +38,6 @@ public class Measurement implements Serializable {
 		this.smart = smart;
 		this.timestamp = timestamp;
 		this.value = value;
-		System.out.println(value);
 	}
 	
 	//getter setters
@@ -50,7 +45,7 @@ public class Measurement implements Serializable {
 		return serialVersionUID;
 	}
 
-	public String getmeasId() {
+	public long getMeasId() {
 		return measId;
 	}
 
@@ -64,6 +59,26 @@ public class Measurement implements Serializable {
 	
 	public double getValue(){
 		return value;
+	}
+	
+	public SmartMeter getSmart(){
+		return smart;
+	}
+
+	public void setTimestamp(long timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	public void setValue(double value) {
+		this.value = value;
+	}
+
+	public void setMet(Metric met) {
+		this.met = met;
+	}
+
+	public void setSmart(SmartMeter smart) {
+		this.smart = smart;
 	}
 
 }

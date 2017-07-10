@@ -14,16 +14,16 @@ public class Metric implements Serializable {
 	
 	//attributes
 	@Id
-	@GeneratedValue
-	String metId;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	long metId;
 	
 	//The measured variable
+	@Column
 	String measvar;
 	
 	//Reference to the corresponding Smart Meters
 	@JsonIgnore
-	@ManyToMany
-	@JoinTable
+	@ManyToMany(mappedBy="metric")
 	List<SmartMeter> sm;
 	
 	//Reference to the corresponding measurements for this variable
@@ -32,10 +32,9 @@ public class Metric implements Serializable {
 	List<Measurement> data;
 	
 	//constructors
-	public Metric(List<SmartMeter> sm, String measvar){
+	public Metric(String measvar){
 		
 		this.measvar = measvar;
-		this.sm = sm;
 		
 	}
 	public Metric(){
@@ -63,7 +62,7 @@ public class Metric implements Serializable {
 		return serialVersionUID;
 	}
 
-	public String getMetId() {
+	public long getMetId() {
 		return metId;
 	}
 
