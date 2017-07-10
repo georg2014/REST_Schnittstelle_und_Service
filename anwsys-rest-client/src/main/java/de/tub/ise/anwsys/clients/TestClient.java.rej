@@ -1,0 +1,9 @@
+diff a/anwsys-rest-client/src/main/java/de/tub/ise/anwsys/clients/TestClient.java b/anwsys-rest-client/src/main/java/de/tub/ise/anwsys/clients/TestClient.java	(rejected hunks)
+@@ -2,6 +2,7 @@
+ 
+ import java.io.IOException;
+ import java.util.ArrayList;
++<<<<<<< HEAD
+ 
+ import org.json.JSONArray;
+ import org.json.JSONObject;
