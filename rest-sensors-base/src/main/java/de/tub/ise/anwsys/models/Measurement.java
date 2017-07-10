@@ -4,14 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-=======
->>>>>>> branch 'GeorgsBranchPlayAround1ToModelAfterClassDiagramm10' of https://github.com/georg2014/REST_Schnittstelle_und_Service.git
->>>>>>> origin/GeorgsBranchPlayAround1ToModelAfterClassDiagramm10
 
 @Entity
 public class Measurement implements Serializable {
@@ -20,26 +12,13 @@ public class Measurement implements Serializable {
 	
 	//Attributes
 	@Id
-<<<<<<< HEAD
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	long measId;
-=======
-	@GeneratedValue
-<<<<<<< HEAD
-	String measId;
-=======
-	@Column
-	String measurementId;
->>>>>>> branch 'GeorgsBranchPlayAround1ToModelAfterClassDiagramm10' of https://github.com/georg2014/REST_Schnittstelle_und_Service.git
->>>>>>> origin/GeorgsBranchPlayAround1ToModelAfterClassDiagramm10
 	
-<<<<<<< HEAD
 	long timestamp;
 	
 	double value;
 	
-=======
->>>>>>> branch 'GeorgsBranchPlayAround1ToModelAfterClassDiagramm10' of https://github.com/georg2014/REST_Schnittstelle_und_Service.git
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn
@@ -66,21 +45,8 @@ public class Measurement implements Serializable {
 		return serialVersionUID;
 	}
 
-<<<<<<< HEAD
 	public long getMeasId() {
-=======
-<<<<<<< HEAD
-	public String getmeasId() {
->>>>>>> origin/GeorgsBranchPlayAround1ToModelAfterClassDiagramm10
 		return measId;
-=======
-	public double getValue() {
-		return value;
-	}
-
-	public String getId() {
-		return measurementId;
->>>>>>> branch 'GeorgsBranchPlayAround1ToModelAfterClassDiagramm10' of https://github.com/georg2014/REST_Schnittstelle_und_Service.git
 	}
 
 	public Metric getMet() {
