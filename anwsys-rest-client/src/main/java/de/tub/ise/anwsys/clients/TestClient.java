@@ -2,6 +2,7 @@ package de.tub.ise.anwsys.clients;
 
 import java.io.IOException;
 import java.util.ArrayList;
+<<<<<<< HEAD
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -9,6 +10,13 @@ import org.json.JSONObject;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
+=======
+import java.util.Iterator;
+
+import org.json.JSONObject;
+
+import com.mashape.unirest.http.*;
+>>>>>>> origin/GeorgsBranchPlayAround1ToModelAfterClassDiagramm10
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 public class TestClient {
