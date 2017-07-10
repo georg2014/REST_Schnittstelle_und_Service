@@ -1,0 +1,26 @@
+public class TestClient {
+	
+	public static void main(String[] args) throws IOException, UnirestException {
+		
+//		HttpResponse<String> response = Unirest.get("https://google.com").asString();
+//		System.out.println(String.format("Google's status code was: %d", response.getStatus()));
+		HttpResponse<JsonNode> response = Unirest.get("http://localhost:7878/meters").asJson();
+		JSONObject myObject = new JSONObject(response);
+		System.out.println(myObject);
+		JSONObject jsonGlossary = myObject.getJSONObject("body");
+		System.out.println(jsonGlossary);
+		jsonGlossary= jsonGlossary.getJSONObject("object");
+		System.out.println(jsonGlossary);
+		JSONArray jsonGlossary2= jsonGlossary.getJSONArray("meters");
+		System.out.println(jsonGlossary2.get(1));
+		
+		ArrayList<JSONArray > meterIdList = new ArrayList<JSONArray>();
+		for(int i=0; i<jsonGlossary2.length();i++){
+//			meterIdList.add(jsonGlossary2.getInt(i));
+		}
+
+	
+
+	}
+
+}
