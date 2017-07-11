@@ -6,21 +6,40 @@ public class TestClient {
 //		System.out.println(String.format("Google's status code was: %d", response.getStatus()));
 		HttpResponse<JsonNode> response = Unirest.get("http://localhost:7878/meters").asJson();
 		JSONObject myObject = new JSONObject(response);
-		System.out.println(myObject);
 		JSONObject jsonGlossary = myObject.getJSONObject("body");
-		System.out.println(jsonGlossary);
 		jsonGlossary= jsonGlossary.getJSONObject("object");
-		System.out.println(jsonGlossary);
 		JSONArray jsonGlossary2= jsonGlossary.getJSONArray("meters");
-		System.out.println(jsonGlossary2.get(1));
-		
-		ArrayList<JSONArray > meterIdList = new ArrayList<JSONArray>();
+		ArrayList<String> meterIdList = new ArrayList<String>();//Liste mit IDs der SmartMeter
 		for(int i=0; i<jsonGlossary2.length();i++){
-//			meterIdList.add(jsonGlossary2.getInt(i));
+			meterIdList.add(jsonGlossary2.getString(i));
+		}	
+		System.out.println(meterIdList.toString());
+		
+
+		ArrayList<String> metricIdList = new ArrayList<String>();//Liste mit IDs der metricen
+		JSONArray dataArray = new JSONArray();//hier kommen die "datas" als JSONObject rein		
+		for(int i=0; i<meterIdList.size();i++){
+			HttpResponse<JsonNode> response2 = Unirest.get("http://localhost:7878/meters/" + meterIdList.get(i)+"/data").asJson();
+			JSONObject myObject2 = new JSONObject(response2);
+			myObject2 = myObject2.getJSONObject("body");
+			JSONArray jArray = myObject2.getJSONArray("array");
+			String unixTimestamp = jArray.get(0).toString().substring(17, 27);
+			String value1 = jArray.get(0).toString().substring(78, 95);// id = MX-11460-01
+			String value2 = jArray.get(0).toString().substring(132, 149);// id = MX-11463-01
+			String smId = meterIdList.get(0);//smartMeter ID aus Head
+			System.out.println("unixtimeStamp: " + unixTimestamp);
+			System.out.println("value1 : " + value1);
+			System.out.println("value2 : " + value2);
+			System.out.println("smartMeterId: " + smId);//Strings zu JSONObject zusammenpacken!
+			
+//			JSONObject jsonObj = new JSONObject("{\"unixTimestamp\":\"N95\",\"cat\":\"WP\"}");
+//			JSONObject measurementObject = new JSONObject("{\"test\":\""+smId+"\",\"timestamp\":\""+unixTimestamp+"\",\"value\":\""+value1+"\"}");
+//			System.out.println(jsonObj.toString());
+//			System.out.println(measurementObject.toString());
 		}
-
-	
-
+		System.out.println(metricIdList.toString());
+		
+		
 	}
 
 }
