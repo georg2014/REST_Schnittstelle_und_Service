@@ -55,15 +55,23 @@ public class TestClient {
 			JSONArray metrics = metrics(responseMeter, "array");
 			//print meter metrics
 			System.out.println("\nmeter metrics:\t"+metrics);
-//			JSONObject metricId = metricId(responseMeter, "metricId");
+//			JSONObject metricId = metricId(responseMeter, "array", "metricId");
 			//print meter metrics
 //			System.out.println("\nmetricId:\t"+metricId+"\n");
 			for(int j=0; j<metrics.length();j++){
 				//print meter details
 				System.out.print("meter details "+j+" "+metrics.get(j)+" ");
+				
 			}
+			//see data
+//			HttpResponse<JsonNode> responseData = Unirest.get("http://localhost:7878/meters/{id}/data").routeParam("id", jsonGlossary2.get(1).toString()).asJson();
+//			System.out.println(metricsObj(responseData,"",""));
 		}
+		HttpResponse<JsonNode> responseData = Unirest.get("http://localhost:7878/meters/ise1224hi5630/data").asJson();
+		System.out.println("\nTEST 2: "+metricsObj(responseData,"",""));
+		
 	}
+	
 	public static JSONObject metricsObj(HttpResponse<JsonNode> response, String path1, String path2){
 		return (new JSONObject(response)).getJSONObject("body");
 	}
@@ -73,7 +81,7 @@ public class TestClient {
 	public static JSONArray metrics(HttpResponse<JsonNode> response, String path){
 		return (new JSONObject(response)).getJSONObject("body").getJSONArray(path);
 	}
-	public static JSONObject metricId(HttpResponse<JsonNode> response, String path){
-		return (new JSONObject(response)).getJSONObject("body").getJSONObject(path);
+	public static JSONObject metricId(HttpResponse<JsonNode> response, String path, String path1){
+		return (new JSONObject(response)).getJSONObject("body").getJSONObject(path).getJSONObject(path1);
 	}
 }
