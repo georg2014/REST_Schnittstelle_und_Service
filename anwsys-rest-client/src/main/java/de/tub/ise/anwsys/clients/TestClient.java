@@ -65,15 +65,14 @@ public class TestClient {
 
 				long timestamp = measurement.getJSONObject("body").getJSONObject("object").getLong("unixTimestamp");
 
-				JSONArray measurements = measurement.getJSONObject("body").getJSONObject("object")
-						.getJSONArray("measurements");
+				JSONArray measurements = measurement.getJSONObject("body").getJSONObject("object").getJSONArray("measurements");
 
-				for (int ind = 0; ind<measurements.length();++i) {
+				for (int ind = 0; ind<measurements.length();++ind) {
 
 					double value = measurements.getJSONObject(ind).getDouble("value");
 					System.out.println(value);
 					
-					Object id = measurements.getJSONObject(ind);
+					String id = measurements.getJSONObject(ind).getString("metricId");
 					System.out.println(id);
 
 					HttpResponse<JsonNode> newMeas = Unirest

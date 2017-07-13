@@ -19,9 +19,9 @@ public class Measurement implements Serializable {
 	
 	double value;
 	
-//	@ManyToOne(fetch=FetchType.EAGER)
-//	@JoinColumn
-//	Metric met;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn
+	Metric met;
 	
 	@JsonIgnore
 	@ManyToOne(fetch=FetchType.EAGER)
@@ -33,8 +33,8 @@ public class Measurement implements Serializable {
 		
 	}
 	
-	public Measurement( SmartMeter smart, long timestamp, double value){
-//		this.met = met;
+	public Measurement(Metric met, SmartMeter smart, long timestamp, double value){
+		this.met = met;
 		this.smart = smart;
 		this.timestamp = timestamp;
 		this.value = value;
@@ -49,9 +49,9 @@ public class Measurement implements Serializable {
 		return measId;
 	}
 
-//	public Metric getMet() {
-//		return met;
-//	}
+	public Metric getMet() {
+		return met;
+	}
 
 	public long getTimestamp() {
 		return timestamp;
@@ -73,9 +73,9 @@ public class Measurement implements Serializable {
 		this.value = value;
 	}
 
-//	public void setMet(Metric met) {
-//		this.met = met;
-//	}
+	public void setMet(Metric met) {
+		this.met = met;
+	}
 
 	public void setSmart(SmartMeter smart) {
 		this.smart = smart;

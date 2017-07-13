@@ -26,9 +26,9 @@ public class Metric implements Serializable {
 	List<SmartMeter> sm;
 	
 	//Reference to the corresponding measurements for this variable
-//	@JsonIgnore
-//	@OneToMany(mappedBy="met")
-//	List<Measurement> data;
+	@JsonIgnore
+	@OneToMany(mappedBy="met")
+	List<Measurement> data;
 	
 	//constructors
 	public Metric(String metricId,String metricText){
@@ -50,9 +50,9 @@ public class Metric implements Serializable {
 		this.metricText = metricText;
 	}
 
-//	public List<Measurement> getData() {
-//		return data;
-//	}
+	public List<Measurement> getData() {
+		return data;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
