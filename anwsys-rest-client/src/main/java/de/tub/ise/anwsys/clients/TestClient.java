@@ -72,13 +72,12 @@ public class TestClient {
 					double value = measurements.getJSONObject(ind).getDouble("value");
 					System.out.println(value);
 					
-					Object id = measurements.getJSONObject(ind);
-					System.out.println(id);
+					Object metric = new JSONObject("{metricId:"+measurements.getJSONObject(ind).getString("metricId")+"}");
 
 					HttpResponse<JsonNode> newMeas = Unirest
 							.post("http://localhost:8080/smartMeter/" + meterId + "/data")
 							.header("accept", "application/json").header("Content-Type", "application/json")
-							.body(new JSONObject("{met:" + id + ",smart:" + meterId + ",timestamp:" + timestamp+ ",value:" + value + "}")).asJson();
+							.body(new JSONObject("{met:" + metric + ",smart:" + meterId + ",timestamp:" + timestamp+ ",value:" + value + "}")).asJson();
 				}
 
 			}
