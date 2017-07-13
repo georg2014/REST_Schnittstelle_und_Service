@@ -53,19 +53,31 @@ public class TestClient
 				HttpResponse<JsonNode> newMeter = Unirest.post("http://localhost:8080/smartMeter")
 						.header("accept", "application/json").header("Content-Type", "application/json")
 						.body(new JSONObject("{meterId:" + meterId + ", metric:" + metrics + "}")).asJson();
+				
 				double averagevalue=0;
 				int i2=0;
-				while(i2!=10)
+				long unrealtimestamp=0;
+				
+				while(i2!=10)					//calculates average amperage for 10x 15 minutes
 				{
 					averagevalue=0;
-					for (int n = 0; n < 900; n++) 
+					for (int n = 0; n < 900; n++) 					//900 values = 15 min by one value per sec
 					{
 						HttpResponse<JsonNode> responseMeasurement = Unirest.get("http://localhost:7878/meters/" + meterId + "/data").asJson();
 	
 						JSONObject measurement = new JSONObject(responseMeasurement);
 	
 						long timestamp = measurement.getJSONObject("body").getJSONObject("object").getLong("unixTimestamp");
-	
+						
+						if(unrealtimestamp==0)								//sets Timestamp to 1 sec per measurement												
+						{
+							unrealtimestamp=timestamp;
+						}
+						else												// counts artificial +1 sec per measurement
+						{
+							unrealtimestamp=unrealtimestamp++;
+						}
+						
 						JSONArray measurements = measurement.getJSONObject("body").getJSONObject("object").getJSONArray("measurements");
 						
 						double value = measurements.getJSONObject(0).getDouble("value");
@@ -78,11 +90,12 @@ public class TestClient
 						HttpResponse<JsonNode> newMeas = Unirest
 								.post("http://localhost:8080/smartMeter/" + meterId + "/data")
 								.header("accept", "application/json").header("Content-Type", "application/json")
-								.body(new JSONObject("{met:" + metric + ",smart:" + meter + ",timestamp:" + timestamp+ ",value:" + value + "}")).asJson();
+								.body(new JSONObject("{met:" + metric + ",smart:" + meter + ",timestamp:" + unrealtimestamp+ ",value:" + value + "}")).asJson();
 					
 					}
-					System.out.println(averagevalue/900);
+					System.out.println(averagevalue/900+"mA");
 					i2++;
+					//unrealtimestamp=0;                //resets timestamp
 				}		
 			}
 		}
