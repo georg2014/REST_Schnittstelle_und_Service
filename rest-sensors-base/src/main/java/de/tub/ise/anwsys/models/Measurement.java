@@ -23,7 +23,6 @@ public class Measurement implements Serializable {
 	@JoinColumn
 	Metric met;
 	
-	@JsonIgnore
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn
 	SmartMeter smart;

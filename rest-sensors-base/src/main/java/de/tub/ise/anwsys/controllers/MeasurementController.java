@@ -25,8 +25,7 @@ public class MeasurementController {
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Measurement> getSmartMeterMetricsData(@PathVariable String smId) {
 		SmartMeter get = smartRepo.findFirstByMeterId(smId);
-		System.out.println(get.getMeterId());
-		return (List<Measurement>) measRepo.findAll();
+		return (List<Measurement>) measRepo.findBySmart(get);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)

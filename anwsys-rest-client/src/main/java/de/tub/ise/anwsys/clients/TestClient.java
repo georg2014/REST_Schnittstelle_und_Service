@@ -33,9 +33,12 @@ public class TestClient {
 
 		// go through all smartmeters
 		for (int i = 0; i < meterArray.length(); i++) {
-
+			
+			//current smart meter id
+			String meterId = meterArray.getString(i);
+			
 			// print every meter
-			System.out.print("\nmeter " + i + " " + meterArray.get(i) + "\n ");
+			System.out.print("\nmeter " + i + " " + meterId + "\n ");
 
 			// go to current smart meter
 			HttpResponse<JsonNode> responseMeter = Unirest.get("http://localhost:7878/meters/" + meterArray.get(i))
@@ -43,9 +46,6 @@ public class TestClient {
 			
 			//
 			JSONArray metrics = metrics(responseMeter, "array");
-			
-			//current smart meter id
-			Object meterId = meterArray.get(i);
 
 			for (int x = 0; x < metrics.length(); x++) {
 				HttpResponse<JsonNode> newMetric = Unirest.post("http://localhost:8080/smartMeter/metric")
@@ -57,7 +57,7 @@ public class TestClient {
 					.header("accept", "application/json").header("Content-Type", "application/json")
 					.body(new JSONObject("{meterId:" + meterId + ", metric:" + metrics + "}")).asJson();
 
-			for (int n = 0; n < 10; n++) {
+			for (int n = 0; n < 3; n++) {
 
 				HttpResponse<JsonNode> responseMeasurement = Unirest.get("http://localhost:7878/meters/" + meterId + "/data").asJson();
 
@@ -72,12 +72,14 @@ public class TestClient {
 					double value = measurements.getJSONObject(ind).getDouble("value");
 					System.out.println(value);
 					
-					Object metric = new JSONObject("{metricId:"+measurements.getJSONObject(ind).getString("metricId")+"}");
+					JSONObject metric = new JSONObject("{metricId:"+measurements.getJSONObject(ind).getString("metricId")+"}");
+					
+					JSONObject meter = new JSONObject("{meterId:"+meterId+"}");
 
 					HttpResponse<JsonNode> newMeas = Unirest
 							.post("http://localhost:8080/smartMeter/" + meterId + "/data")
 							.header("accept", "application/json").header("Content-Type", "application/json")
-							.body(new JSONObject("{met:" + metric + ",smart:" + meterId + ",timestamp:" + timestamp+ ",value:" + value + "}")).asJson();
+							.body(new JSONObject("{met:" + metric + ",smart:" + meter + ",timestamp:" + timestamp+ ",value:" + value + "}")).asJson();
 				}
 
 			}
