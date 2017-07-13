@@ -54,31 +54,36 @@ public class TestClient
 						.header("accept", "application/json").header("Content-Type", "application/json")
 						.body(new JSONObject("{meterId:" + meterId + ", metric:" + metrics + "}")).asJson();
 				double averagevalue=0;
-				
-				for (int n = 0; n < 500; n++) 
+				int i2=0;
+				while(i2!=10)
 				{
-					HttpResponse<JsonNode> responseMeasurement = Unirest.get("http://localhost:7878/meters/" + meterId + "/data").asJson();
-
-					JSONObject measurement = new JSONObject(responseMeasurement);
-
-					long timestamp = measurement.getJSONObject("body").getJSONObject("object").getLong("unixTimestamp");
-
-					JSONArray measurements = measurement.getJSONObject("body").getJSONObject("object").getJSONArray("measurements");
+					averagevalue=0;
+					for (int n = 0; n < 900; n++) 
+					{
+						HttpResponse<JsonNode> responseMeasurement = Unirest.get("http://localhost:7878/meters/" + meterId + "/data").asJson();
+	
+						JSONObject measurement = new JSONObject(responseMeasurement);
+	
+						long timestamp = measurement.getJSONObject("body").getJSONObject("object").getLong("unixTimestamp");
+	
+						JSONArray measurements = measurement.getJSONObject("body").getJSONObject("object").getJSONArray("measurements");
+						
+						double value = measurements.getJSONObject(0).getDouble("value");
+						
+						averagevalue=averagevalue+value;
+						JSONObject metric = new JSONObject("{metricId:"+measurements.getJSONObject(0).getString("metricId")+"}");
+						
+						JSONObject meter = new JSONObject("{meterId:"+meterId+"}");
+	
+						HttpResponse<JsonNode> newMeas = Unirest
+								.post("http://localhost:8080/smartMeter/" + meterId + "/data")
+								.header("accept", "application/json").header("Content-Type", "application/json")
+								.body(new JSONObject("{met:" + metric + ",smart:" + meter + ",timestamp:" + timestamp+ ",value:" + value + "}")).asJson();
 					
-					double value = measurements.getJSONObject(0).getDouble("value");
-					
-					averagevalue=averagevalue+value;
-					JSONObject metric = new JSONObject("{metricId:"+measurements.getJSONObject(0).getString("metricId")+"}");
-					
-					JSONObject meter = new JSONObject("{meterId:"+meterId+"}");
-
-					HttpResponse<JsonNode> newMeas = Unirest
-							.post("http://localhost:8080/smartMeter/" + meterId + "/data")
-							.header("accept", "application/json").header("Content-Type", "application/json")
-							.body(new JSONObject("{met:" + metric + ",smart:" + meter + ",timestamp:" + timestamp+ ",value:" + value + "}")).asJson();
-				
-				}
-				System.out.println(averagevalue/500);
+					}
+					System.out.println(averagevalue/900);
+					i2++;
+				}		
 			}
 		}
 
