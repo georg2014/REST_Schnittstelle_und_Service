@@ -11,17 +11,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.tub.ise.anwsys.models.Measurement;
+import de.tub.ise.anwsys.models.SmartMeter;
 import de.tub.ise.anwsys.repos.MearsurementRepository;
+import de.tub.ise.anwsys.repos.SmartMeterRepository;
 
 @RestController
 @RequestMapping("/smartMeter/{smId}/data")
 public class MeasurementController {
 	
 	@Autowired MearsurementRepository measRepo;
+	@Autowired SmartMeterRepository smartRepo;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Measurement> getSmartMeterMetricsData(@PathVariable String smId) {
-		return (List<Measurement>) measRepo.findBySmartMeterId(smId);
+		System.out.println(smId);
+		SmartMeter get = smartRepo.findFirstByMeterId(smId);
+		System.out.println(get.getMeterId());
+		return (List<Measurement>) measRepo.findAll();
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)

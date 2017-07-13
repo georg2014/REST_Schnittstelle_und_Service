@@ -57,7 +57,7 @@ public class TestClient {
 					.header("accept", "application/json").header("Content-Type", "application/json")
 					.body(new JSONObject("{meterId:" + meterId + ", metric:" + metrics + "}")).asJson();
 
-			for (int n = 0; n < 1000; n++) {
+			for (int n = 0; n < 10; n++) {
 
 				HttpResponse<JsonNode> responseMeasurement = Unirest.get("http://localhost:7878/meters/" + meterId + "/data").asJson();
 
@@ -72,7 +72,7 @@ public class TestClient {
 					double value = measurements.getJSONObject(ind).getDouble("value");
 					System.out.println(value);
 					
-					String id = measurements.getJSONObject(ind).getString("metricId");
+					Object id = measurements.getJSONObject(ind);
 					System.out.println(id);
 
 					HttpResponse<JsonNode> newMeas = Unirest
