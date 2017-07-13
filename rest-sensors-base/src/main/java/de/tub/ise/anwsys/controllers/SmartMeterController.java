@@ -29,7 +29,6 @@ public class SmartMeterController {
 	@RequestMapping(method=RequestMethod.GET, value="/{meterId}")
 	public List<Metric> getMetrics(@PathVariable String meterId){
 		SmartMeter m = smRepo.findOne(meterId);
-		System.out.println(m.getMeterId());
 		return m.getMetric();
 	}
 	

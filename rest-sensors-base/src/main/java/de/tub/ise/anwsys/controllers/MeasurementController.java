@@ -26,14 +26,14 @@ public class MeasurementController {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public Measurement createMeasurement(@RequestBody Measurement meas){
-		Measurement m = new Measurement(meas.getMet(), meas.getSmart(), meas.getTimestamp(),meas.getValue());
+		Measurement m = new Measurement( meas.getSmart(), meas.getTimestamp(),meas.getValue());
 		return measRepo.save(m);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, value="/{measId}")
 	public Measurement update(@PathVariable String measId, @RequestBody Measurement meas){
 		Measurement m = measRepo.findOne(measId);
-		m.setMet(meas.getMet());
+//		m.setMet(meas.getMet());
 		m.setSmart(meas.getSmart());
 		m.setTimestamp(meas.getTimestamp());
 		m.setValue(meas.getValue());

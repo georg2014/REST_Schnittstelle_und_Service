@@ -21,26 +21,29 @@ public class Server {
         SpringApplication.run(Server.class, args);
     }
     
-    /*********************************FOR TESTING:START*******************************/
-    @Bean
-    CommandLineRunner init(SmartMeterRepository smRepo, MetricRepository mRepo, MearsurementRepository measR) {
-    	
-    	Metric mc = mRepo.save(new Metric("Current(mA)"));
-        Metric mv = mRepo.save(new Metric("Voltage(V)"));
-    	
-        List<Metric> metrics = new ArrayList<>();
-        metrics.add(mc);
-        metrics.add(mv);
-        
-    	return (evt) -> Arrays.asList(
-       "01,02".split(","))
-       .forEach(
-         a -> {
-          SmartMeter sm = smRepo.save(new SmartMeter(a, metrics));
-          measR.save(new Measurement(mc, sm, 123456,  247.9875));
-          measR.save(new Measurement(mv, sm, 123456,  555.555555));
-         });
-    }
-    //,SM_pwebb,SM_ogierke,SM_rwinch,SM_mfisher,SM_mpollack,SM_jlong
-    /*********************************FOR TESTING:END*********************************/
+    
+    
+    
+//    /*********************************FOR TESTING:START*******************************/
+//    @Bean
+//    CommandLineRunner init(SmartMeterRepository smRepo, MetricRepository mRepo, MearsurementRepository measR) {
+//    	
+//    	Metric mc = mRepo.save(new Metric("Current(mA)"));
+//        Metric mv = mRepo.save(new Metric("Voltage(V)"));
+//    	
+//        List<Metric> metrics = new ArrayList<>();
+//        metrics.add(mc);
+//        metrics.add(mv);
+//        
+//    	return (evt) -> Arrays.asList(
+//       "01,02".split(","))
+//       .forEach(
+//         a -> {
+//          SmartMeter sm = smRepo.save(new SmartMeter(a, metrics));
+//          measR.save(new Measurement(mc, sm, 123456,  247.9875));
+//          measR.save(new Measurement(mv, sm, 123456,  555.555555));
+//         });
+//    }
+//    //,SM_pwebb,SM_ogierke,SM_rwinch,SM_mfisher,SM_mpollack,SM_jlong
+//    /*********************************FOR TESTING:END*********************************/
 }

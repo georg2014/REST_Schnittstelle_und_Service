@@ -8,6 +8,6 @@ import de.tub.ise.anwsys.models.Metric;
 
 public interface MetricRepository extends JpaRepository<Metric, String>{
 	
-	List<Metric> findByMetId(String id);
+	List<Metric> findByMetricId(String id);
 
 }

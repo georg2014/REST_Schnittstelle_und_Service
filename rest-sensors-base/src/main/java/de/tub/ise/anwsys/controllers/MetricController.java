@@ -27,19 +27,15 @@ public class MetricController {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public Metric createMetric(@RequestBody Metric metric) {
-		if (!metRepo.exists(Long.toString(metric.getMetId()))) {
-			return metRepo.save(new Metric(metric.getMeasvar()));
-		} else {
-			return null;
-		}
+			return metRepo.save(new Metric(metric.getmetricId(),metric.getmetricText()));
 	}
 	
 
 	@RequestMapping(method=RequestMethod.PUT, value="/{metId}")
 	public Metric update(@PathVariable String metId, @RequestBody Metric metric){
 		Metric m = metRepo.findOne(metId);
-		m.setData(metric.getData());
-		m.setMeasvar(metric.getMeasvar());
+		m.setmetricId(metric.getmetricId());
+		m.setmetricText(metric.getmetricText());
 		return metRepo.save(m);
 	}
 	

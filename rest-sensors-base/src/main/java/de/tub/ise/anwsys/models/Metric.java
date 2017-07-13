@@ -14,12 +14,11 @@ public class Metric implements Serializable {
 	
 	//attributes
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	long metId;
+	String metricId;
 	
 	//The measured variable
 	@Column
-	String measvar;
+	String metricText;
 	
 	//Reference to the corresponding Smart Meters
 	@JsonIgnore
@@ -27,14 +26,15 @@ public class Metric implements Serializable {
 	List<SmartMeter> sm;
 	
 	//Reference to the corresponding measurements for this variable
-	@JsonIgnore
-	@OneToMany(mappedBy = "met")
-	List<Measurement> data;
+//	@JsonIgnore
+//	@OneToMany(mappedBy="met")
+//	List<Measurement> data;
 	
 	//constructors
-	public Metric(String measvar){
+	public Metric(String metricId,String metricText){
 		
-		this.measvar = measvar;
+		this.metricId= metricId;
+		this.metricText = metricText;
 		
 	}
 	public Metric(){
@@ -42,32 +42,33 @@ public class Metric implements Serializable {
 	}
 	
 	//getters setters
-	public String getMeasvar() {
-		return measvar;
+	public String getmetricText() {
+		return metricText;
 	}
 
-	public void setMeasvar(String measvar) {
-		this.measvar = measvar;
+	public void setmetricText(String metricText) {
+		this.metricText = metricText;
 	}
 
-	public List<Measurement> getData() {
-		return data;
-	}
-
-	public void setData(List<Measurement> data) {
-		this.data = data;
-	}
+//	public List<Measurement> getData() {
+//		return data;
+//	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-	public long getMetId() {
-		return metId;
+	public String getmetricId() {
+		return metricId;
 	}
 
 	public List<SmartMeter> getSm() {
 		return sm;
+	}
+	public void setmetricId(String metricId) {
+		
+		this.metricId = metricId;
+		
 	}
 	
 
