@@ -6,6 +6,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@Table(name="measurement")
 public class Measurement implements Serializable {
 
 	private static final long serialVersionUID = -9138848863259362629L;
@@ -15,16 +16,19 @@ public class Measurement implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	long measId;
 	
+	@Column(name="timestamp")
 	long timestamp;
 	
+	@Column(name="value")
 	double value;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn
+	@JoinColumn(name="met")
 	Metric met;
 	
+	@JsonIgnore
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn
+	@JoinColumn(name="smart")
 	SmartMeter smart;
 	
 	//constructors

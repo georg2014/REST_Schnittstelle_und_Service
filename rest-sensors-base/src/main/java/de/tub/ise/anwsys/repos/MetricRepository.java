@@ -9,5 +9,7 @@ import de.tub.ise.anwsys.models.Metric;
 public interface MetricRepository extends JpaRepository<Metric, String>{
 	
 	List<Metric> findByMetricId(String id);
+	
+	Metric findFirstByMetricId(String id);
 
 }
