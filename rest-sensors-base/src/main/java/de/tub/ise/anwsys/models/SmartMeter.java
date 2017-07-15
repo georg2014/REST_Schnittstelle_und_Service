@@ -17,10 +17,12 @@ public class SmartMeter implements Serializable {
 	@Column
 	String meterId;
 	
+	//metrics for this meter
 	@ManyToMany
 	@JoinTable
 	List<Metric> metric;
 	
+	//measurements for this meter
 	@JsonIgnore
 	@OneToMany(mappedBy="smart")
 	@Column(name="meas")

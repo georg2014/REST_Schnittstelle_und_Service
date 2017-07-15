@@ -39,7 +39,7 @@ public class MeasurementController {
 
 		Metric m = metRepo.findFirstByMetricId(metId);
 		SmartMeter sm = smartRepo.findFirstByMeterId(smId);
-		List<Measurement> results = measRepo.getValuesAveraged(sm, m);
+		List<Measurement> results = measRepo.findBySmartAndMet(sm, m);
 
 		int size = results.size();
 

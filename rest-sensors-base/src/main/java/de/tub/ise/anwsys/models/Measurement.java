@@ -22,10 +22,12 @@ public class Measurement implements Serializable {
 	@Column(name="value")
 	double value;
 	
+	//corresponding metric
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="met")
 	Metric met;
 	
+	//corresponding meter
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="smart")
 	SmartMeter smart;

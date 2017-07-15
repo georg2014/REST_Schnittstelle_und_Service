@@ -85,6 +85,7 @@ public class TestClient {
 				}
 			}
 		}
+		
 		/*
 		 * 	Erfragen Sie mit Hilfe des Clients über Ihre API
 			die 
@@ -121,10 +122,12 @@ public class TestClient {
 				}
 			}
 		}
+		
+		
 	}
 
 	
-	//helping methodes
+	//helping methods
 	public static JSONObject metricsObj(HttpResponse<JsonNode> response, String path1, String path2) {
 		return (new JSONObject(response)).getJSONObject("body");
 	}
