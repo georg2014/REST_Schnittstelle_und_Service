@@ -37,7 +37,7 @@ public class SmartMeterController {
 		return smRepo.save(new SmartMeter(smartMeter.getMeterId(), smartMeter.getMetric()));
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, value="/{id}")
+	@RequestMapping(method=RequestMethod.PUT, value="/{meterid}")
 	public SmartMeter updateSmartMeter(@RequestBody SmartMeter s, @PathVariable String id){
 		SmartMeter smartMeter = smRepo.findOne(id);
 		smartMeter.setMetric(s.getMetric());
