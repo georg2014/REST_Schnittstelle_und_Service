@@ -38,9 +38,10 @@ public class MeasurementController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET,value="/{metId}/data/all")
-	public List<Measurement> getSmartMeterData(@PathVariable String smId) {
-		SmartMeter get = smartRepo.findFirstByMeterId(smId);
-		return (List<Measurement>) measRepo.findBySmart(get);
+	public List<Measurement> getSmartMeterData(@PathVariable String smId, @PathVariable String metId) {
+		SmartMeter smart = smartRepo.findFirstByMeterId(smId);
+		Metric met = metRepo.findFirstByMetricId(metId);
+		return (List<Measurement>) measRepo.findBySmartAndMet(smart,met);
 	}
 	
 	
