@@ -15,11 +15,6 @@ public class TestClient {
 
 	public static void main(String[] args) throws IOException, UnirestException {
 
-		// HttpResponse<String> response =
-		// Unirest.get("https://google.com").asString();
-		// System.out.println(String.format("Google's status code was: %d",
-		// response.getStatus()));
-
 		HttpResponse<JsonNode> responseMeters = Unirest.get("http://localhost:7878/meters").asJson();
 
 		// JSONObject myObject = new JSONObject(responseMeters);
