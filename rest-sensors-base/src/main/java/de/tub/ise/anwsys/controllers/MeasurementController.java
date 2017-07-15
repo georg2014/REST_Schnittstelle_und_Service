@@ -23,28 +23,28 @@ import de.tub.ise.anwsys.repos.MetricRepository;
 import de.tub.ise.anwsys.repos.SmartMeterRepository;
 
 @RestController
-@RequestMapping("/smartMeter/{smId}/{metId}")
+@RequestMapping("/smartMeter/{smId}/measurement")
 public class MeasurementController {
 	
 	@Autowired MearsurementRepository measRepo;
 	@Autowired SmartMeterRepository smartRepo;
 	@Autowired MetricRepository metRepo;
 	
-	@RequestMapping(method = RequestMethod.GET,value="/data")
+	@RequestMapping(method = RequestMethod.GET,value="/{metId}/data")
 	public List<Double> getSmartMeterMetricsData(@PathVariable String smId, @PathVariable String metId) {
-		SmartMeter sm = smartRepo.findFirstByMeterId(smId);
 		Metric m = metRepo.findFirstByMetricId(metId);
+		SmartMeter sm = smartRepo.findFirstByMeterId(smId);
 		return measRepo.getValuesAveraged(sm, m);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET,value="/data/all")
-	public List<Measurement> getSmartMeterMetricsData(@PathVariable String smId) {
+	@RequestMapping(method = RequestMethod.GET,value="/{metId}/data/all")
+	public List<Measurement> getSmartMeterData(@PathVariable String smId) {
 		SmartMeter get = smartRepo.findFirstByMeterId(smId);
 		return (List<Measurement>) measRepo.findBySmart(get);
 	}
 	
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET,value="/{metId}")
 	public Object getSmartMeterAverageMetricData(@PathVariable String smId, @PathVariable String metId,@RequestParam(value = "time",required=true) String time) {
 		
 		SimpleDateFormat timeofday = new SimpleDateFormat("HH-mm-ss-dd-MM-yyyy");

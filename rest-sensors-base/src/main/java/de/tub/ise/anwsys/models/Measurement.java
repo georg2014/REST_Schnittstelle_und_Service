@@ -26,7 +26,6 @@ public class Measurement implements Serializable {
 	@JoinColumn(name="met")
 	Metric met;
 	
-	@JsonIgnore
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="smart")
 	SmartMeter smart;

@@ -7,6 +7,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@Table(name = "smartmeter")
 public class SmartMeter implements Serializable {
 	
 	private static final long serialVersionUID = 7803824012042165639L;
@@ -22,6 +23,7 @@ public class SmartMeter implements Serializable {
 	
 	@JsonIgnore
 	@OneToMany(mappedBy="smart")
+	@Column(name="meas")
 	List<Measurement> meas;
 	
 	//constructors

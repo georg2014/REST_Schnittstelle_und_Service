@@ -78,7 +78,7 @@ public class TestClient {
 					JSONObject meter = new JSONObject("{meterId:"+meterId+"}");
 
 					HttpResponse<JsonNode> newMeas = Unirest
-							.post("http://localhost:8080/smartMeter/" + meterId + "/data")
+							.post("http://localhost:8080/smartMeter/" + meterId + "/measurement")
 							.header("accept", "application/json").header("Content-Type", "application/json")
 							.body(new JSONObject("{met:" + metric + ",smart:" + meter + ",timestamp:" + timestamp+ ",value:" + value + "}")).asJson();
 				}
