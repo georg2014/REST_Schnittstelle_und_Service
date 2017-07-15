@@ -21,5 +21,6 @@ public interface MearsurementRepository extends JpaRepository<Measurement, Strin
 		@Query(value = "SELECT AVG(value) FROM (SELECT * FROM measurement WHERE smart=:selectedSmart AND met=:selectedMetric) WHERE timestamp BETWEEN :selectedTime AND :selectedTime+1", nativeQuery=true)
 		Double getAverageValue(@Param("selectedTime") long selectedTime,@Param("selectedSmart") SmartMeter selectedSmart, @Param("selectedMetric") Metric selectedMetric);
 
+		
 }
 
