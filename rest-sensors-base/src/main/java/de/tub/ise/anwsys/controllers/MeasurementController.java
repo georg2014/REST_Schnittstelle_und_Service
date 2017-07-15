@@ -46,24 +46,25 @@ public class MeasurementController {
 	
 	
 	@RequestMapping(method = RequestMethod.GET,value="/{metId}")
-	public Object getSmartMeterAverageMetricData(@PathVariable String smId, @PathVariable String metId,@RequestParam(value = "time",required=true) String time) {
+	public Object getSmartMeterAverageMetricData(@PathVariable String smId, @PathVariable String metId,@RequestParam(value = "time",required=true) long time) {
 		
 		SimpleDateFormat timeofday = new SimpleDateFormat("HH-mm-ss-dd-MM-yyyy");
 		
-		try {
+//		try {
 			
-			Date timesection = timeofday.parse(time);
-			long timestamp = timesection.getTime()/1000L;
+//			Date timesection = timeofday.parse(time);
+//			long timestamp = timesection.getTime()/1000L;
+		
 			SmartMeter sm = smartRepo.findFirstByMeterId(smId);
 			Metric m = metRepo.findFirstByMetricId(metId);
-			return measRepo.getAverageValue(timestamp, sm, m);
+			return measRepo.getAverageValue(time, sm, m);
 			
-		} catch (ParseException e) {
-			e.printStackTrace();
-			System.out.println("Not the right Time format!");
-		}
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//			System.out.println("Not the right Time format!");
+//		}
 		
-		return null;
+//		return null;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)

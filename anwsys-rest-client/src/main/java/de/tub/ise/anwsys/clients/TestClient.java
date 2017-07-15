@@ -52,7 +52,7 @@ public class TestClient {
 					.header("accept", "application/json").header("Content-Type", "application/json")
 					.body(new JSONObject("{meterId:" + meterId + ", metric:" + metrics + "}")).asJson();
 
-			for (int n = 0; n < 7; n++) {
+			for (int n = 0; n < 5; n++) {
 
 				HttpResponse<JsonNode> responseMeasurement = Unirest.get("http://localhost:7878/meters/" + meterId + "/data").asJson();
 
