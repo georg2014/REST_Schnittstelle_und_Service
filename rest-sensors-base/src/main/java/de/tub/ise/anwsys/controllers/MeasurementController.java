@@ -2,9 +2,10 @@ package de.tub.ise.anwsys.controllers;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+import java.math.BigInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,56 +26,95 @@ import de.tub.ise.anwsys.repos.SmartMeterRepository;
 @RestController
 @RequestMapping("/smartMeter/{smId}/measurement")
 public class MeasurementController {
-	
-	@Autowired MearsurementRepository measRepo;
-	@Autowired SmartMeterRepository smartRepo;
-	@Autowired MetricRepository metRepo;
-	
-	@RequestMapping(method = RequestMethod.GET,value="/{metId}/data")
-	public List<Double> getSmartMeterMetricsData(@PathVariable String smId, @PathVariable String metId) {
+
+	@Autowired
+	MearsurementRepository measRepo;
+	@Autowired
+	SmartMeterRepository smartRepo;
+	@Autowired
+	MetricRepository metRepo;
+
+	@RequestMapping(method = RequestMethod.GET, value = "/{metId}/data")
+	public ArrayList<Object[]> getSmartMeterMetricsData(@PathVariable String smId, @PathVariable String metId) {
+
 		Metric m = metRepo.findFirstByMetricId(metId);
 		SmartMeter sm = smartRepo.findFirstByMeterId(smId);
-		return measRepo.getValuesAveraged(sm, m);
+		List<Measurement> results = measRepo.findBySmartAndMet(sm, m);
+
+		int size = results.size();
+
+		int groups = size / 900;
+
+		ArrayList<Object[]> averagedResults = new ArrayList<Object[]>();
+
+		for (int i = 0; i < groups; ++i) {
+
+			Double sum = 0.0;
+
+			long firstTimestamp = 0;
+
+			for (int x = 900 * i; x < (i + 1) * 900; ++x) {
+
+				sum = sum + results.get(i).getValue();
+
+				if (x == 900 * i) {
+					firstTimestamp = results.get(x).getTimestamp();
+				};
+
+			}
+
+			Double average = sum / 900;
+
+			Date firstTime = new Date(firstTimestamp * 1000);
+
+			averagedResults.add(new Object[] { firstTime.toString(), average });
+		}
+
+		return averagedResults;
+
 	}
-	
-	@RequestMapping(method = RequestMethod.GET,value="/{metId}/data/all")
+
+	@RequestMapping(method = RequestMethod.GET, value = "/{metId}/data/all")
 	public List<Measurement> getSmartMeterData(@PathVariable String smId, @PathVariable String metId) {
+		
 		SmartMeter smart = smartRepo.findFirstByMeterId(smId);
 		Metric met = metRepo.findFirstByMetricId(metId);
-		return (List<Measurement>) measRepo.findBySmartAndMet(smart,met);
+		return (List<Measurement>) measRepo.findBySmartAndMet(smart, met);
+		
 	}
-	
-	
-	@RequestMapping(method = RequestMethod.GET,value="/{metId}")
-	public Object getSmartMeterAverageMetricData(@PathVariable String smId, @PathVariable String metId,@RequestParam(value = "time",required=true) long time) {
-		
+
+	@RequestMapping(method = RequestMethod.GET, value = "/{metId}")
+	public Object getSmartMeterAverageMetricData(@PathVariable String smId, @PathVariable String metId,
+			@RequestParam(value = "time", required = true) String time) {
+
 		SimpleDateFormat timeofday = new SimpleDateFormat("HH-mm-ss-dd-MM-yyyy");
-		
-//		try {
-			
-//			Date timesection = timeofday.parse(time);
-//			long timestamp = timesection.getTime()/1000L;
-		
+
+		try {
+
+			Date timesection = timeofday.parse(time);
+			long timestamp = timesection.getTime() / 1000L;
+
 			SmartMeter sm = smartRepo.findFirstByMeterId(smId);
 			Metric m = metRepo.findFirstByMetricId(metId);
-			return measRepo.getAverageValue(time, sm, m);
-			
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//			System.out.println("Not the right Time format!");
-//		}
-		
-//		return null;
+			return measRepo.getAverageValue(timestamp, sm, m);
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+			System.out.println("Not the right Time format!");
+		}
+
+		return null;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
-	public Measurement createMeasurement(@RequestBody Measurement meas){
-		Measurement m = new Measurement(meas.getMet(), meas.getSmart(), meas.getTimestamp(),meas.getValue());
+	public Measurement createMeasurement(@RequestBody Measurement meas) {
+		Measurement m = new Measurement(meas.getMet(), meas.getSmart(), meas.getTimestamp(), meas.getValue());
 		return measRepo.save(m);
 	}
-	
-	@RequestMapping(method=RequestMethod.PUT, value="/{measId}")
-	public Measurement update(@PathVariable String measId, @RequestBody Measurement meas){
+
+	@RequestMapping(method = RequestMethod.PUT, value = "/{measId}")
+	public Measurement update(@PathVariable String measId, @RequestBody Measurement meas) {
+		
 		Measurement m = measRepo.findOne(measId);
 		m.setMet(meas.getMet());
 		m.setSmart(meas.getSmart());
@@ -82,11 +122,14 @@ public class MeasurementController {
 		m.setValue(meas.getValue());
 		return measRepo.save(m);
 		
+
 	}
-	
+
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{measId}")
 	public ResponseEntity<Void> delete(@PathVariable String measId) {
+		
 		measRepo.delete(measId);
 		return ResponseEntity.ok().build();
+		
 	}
 }

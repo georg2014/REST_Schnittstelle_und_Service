@@ -29,6 +29,7 @@ public class SmartMeterController {
 	@RequestMapping(method=RequestMethod.GET, value="/{meterId}")
 	public List<Metric> getMetrics(@PathVariable String meterId){
 		SmartMeter m = smRepo.findOne(meterId);
+		System.out.println(m.getMeterId());
 		return m.getMetric();
 	}
 	
@@ -37,7 +38,7 @@ public class SmartMeterController {
 		return smRepo.save(new SmartMeter(smartMeter.getMeterId(), smartMeter.getMetric()));
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, value="/{meterid}")
+	@RequestMapping(method=RequestMethod.PUT, value="/{id}")
 	public SmartMeter updateSmartMeter(@RequestBody SmartMeter s, @PathVariable String id){
 		SmartMeter smartMeter = smRepo.findOne(id);
 		smartMeter.setMetric(s.getMetric());
