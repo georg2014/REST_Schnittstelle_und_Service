@@ -24,7 +24,7 @@ public class SmartMeter implements Serializable {
 	
 	//measurements for this meter
 	@JsonIgnore
-	@OneToMany(mappedBy="smart")
+	@OneToMany(mappedBy="smart", cascade = CascadeType.ALL)
 	@Column(name="meas")
 	List<Measurement> meas;
 	
