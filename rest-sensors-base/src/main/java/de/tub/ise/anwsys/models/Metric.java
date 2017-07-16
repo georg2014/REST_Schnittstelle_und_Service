@@ -22,7 +22,7 @@ public class Metric implements Serializable {
 	
 	//Reference to the corresponding Smart Meters
 	@JsonIgnore
-	@ManyToMany(mappedBy="metric")
+	@ManyToMany(mappedBy="metric",cascade = CascadeType.ALL)
 	List<SmartMeter> sm;
 	
 	//Reference to the corresponding measurements for this variable
