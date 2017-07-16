@@ -3,8 +3,6 @@ package de.tub.ise.anwsys.models;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name="measurement")
 public class Measurement implements Serializable {

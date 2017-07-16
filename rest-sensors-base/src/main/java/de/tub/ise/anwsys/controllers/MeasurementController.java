@@ -5,8 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.math.BigInteger;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +21,7 @@ import de.tub.ise.anwsys.repos.MearsurementRepository;
 import de.tub.ise.anwsys.repos.MetricRepository;
 import de.tub.ise.anwsys.repos.SmartMeterRepository;
 
+
 @RestController
 @RequestMapping("/smartMeter/{smId}/measurement")
 public class MeasurementController {
@@ -34,38 +33,44 @@ public class MeasurementController {
 	@Autowired
 	MetricRepository metRepo;
 
+	/**
+	 * Calculates a 15 min average value of amperage
+	 * @param smId
+	 * @param metId
+	 * @return averagedResults 
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/{metId}/data")
 	public ArrayList<Object[]> getSmartMeterMetricsData(@PathVariable String smId, @PathVariable String metId) {
 
 		Metric m = metRepo.findFirstByMetricId(metId);
 		SmartMeter sm = smartRepo.findFirstByMeterId(smId);
-		List<Measurement> results = measRepo.findBySmartAndMet(sm, m);
+		List<Measurement> results = measRepo.findBySmartAndMet(sm, m); //adds all measurements of the given smartmeter into a list
 
 		int size = results.size();
 
-		int groups = size / 900;
+		int groups = size / 900;			//Calculates the amount of 15 min intervals given (1 mesurement per sec 900sec=15min)
 
 		ArrayList<Object[]> averagedResults = new ArrayList<Object[]>();
 
-		for (int i = 0; i < groups; ++i) {
+		for (int i = 0; i < groups; ++i) {		//Calculates for each 15 min interval the average amperage 							
 
 			Double sum = 0.0;
 
 			long firstTimestamp = 0;
 
-			for (int x = 900 * i; x < (i + 1) * 900; ++x) {
+			for (int x = 900 * i; x < (i + 1) * 900; ++x) { //goes through each measurement in the group
 
 				sum = sum + results.get(i).getValue();
 
-				if (x == 900 * i) {
+				if (x == 900 * i) {						//sets timestamp of the interval
 					firstTimestamp = results.get(x).getTimestamp();
 				};
 
 			}
 
-			Double average = sum / 900;
+			Double average = sum / 900;	//calluclates the average
 
-			Date firstTime = new Date(firstTimestamp * 1000);
+			Date firstTime = new Date(firstTimestamp * 1000);	//Formats timestamp to date 
 
 			averagedResults.add(new Object[] { firstTime.toString(), average });
 		}
@@ -74,6 +79,12 @@ public class MeasurementController {
 
 	}
 
+	/**
+	 * returns a list of all measurements of a metricId
+	 * @param smId
+	 * @param metId
+	 * @return List<Measurements>
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/{metId}/data/all")
 	public List<Measurement> getSmartMeterData(@PathVariable String smId, @PathVariable String metId) {
 		
@@ -83,35 +94,24 @@ public class MeasurementController {
 		
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/{metId}")
-	public Object getSmartMeterAverageMetricData(@PathVariable String smId, @PathVariable String metId,
-			@RequestParam(value = "time", required = true) String time) {
-
-		SimpleDateFormat timeofday = new SimpleDateFormat("HH-mm-ss-dd-MM-yyyy");
-
-		try {
-
-			Date timesection = timeofday.parse(time);
-			long timestamp = timesection.getTime() / 1000L;
-
-			SmartMeter sm = smartRepo.findFirstByMeterId(smId);
-			Metric m = metRepo.findFirstByMetricId(metId);
-			return measRepo.getAverageValue(timestamp, sm, m);
-
-		} catch (ParseException e) {
-			e.printStackTrace();
-			System.out.println("Not the right Time format!");
-		}
-
-		return null;
-	}
-
+	
+	/**
+	 * creates new Measurement
+	 * @param meas
+	 * @return measurement 
+	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public Measurement createMeasurement(@RequestBody Measurement meas) {
 		Measurement m = new Measurement(meas.getMet(), meas.getSmart(), meas.getTimestamp(), meas.getValue());
 		return measRepo.save(m);
 	}
 
+	/**
+	 * updates measurement by the measurement id
+	 * @param measId
+	 * @param meas
+	 * @return measurement
+	 */
 	@RequestMapping(method = RequestMethod.PUT, value = "/{measId}")
 	public Measurement update(@PathVariable String measId, @RequestBody Measurement meas) {
 		
@@ -121,10 +121,13 @@ public class MeasurementController {
 		m.setTimestamp(meas.getTimestamp());
 		m.setValue(meas.getValue());
 		return measRepo.save(m);
-		
-
 	}
 
+	/**
+	 * deletes measurement by the measurement id
+	 * @param measId
+	 * @return 
+	 */
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{measId}")
 	public ResponseEntity<Void> delete(@PathVariable String measId) {
 		
