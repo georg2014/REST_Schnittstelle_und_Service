@@ -116,8 +116,8 @@ public class TestClient {
 					if(currMetTxt.equals(metTxt)){
 						//save metricId
 						metId = (String) metrics.getJSONObject(j).getString("metricId");
-						//TODO time to look for: this is just implemented here so to get a wished avarage value
-						String time = "Fri Jan 13 01:00:00 CET 2017"; //needs to be parsed to HH-mm-ss-dd-MM-yyyy now!!!
+						
+						String time = "Fri Jan 13 01:00:00 CET 2017"; //<--- Hier kommt der gewünschte 15min Abschnitt Anfang rein
 						//get measurment response from our REST-Gateway [http://localhost:8080/smartMeter/{meterId}/measurement/{metricId}/data]
 						GetRequest responseMeas = Unirest.get("http://localhost:8080/smartMeter/" + meterId + "/measurement/" + metId + "/data");
 						//get array of 15-min intervals
