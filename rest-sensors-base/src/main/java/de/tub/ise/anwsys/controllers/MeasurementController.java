@@ -45,7 +45,7 @@ public class MeasurementController {
 
 		int size = results.size();
 
-		int groups = size / 900;			//Calculates the amount of 15 min intervals given (1 mesurement per sec 900sec=15min)
+		int groups = size / 900;			//Calculates the amount of 15 min intervals given (1 measurement per sec 900sec=15min)
 
 		ArrayList<Object[]> averagedResults = new ArrayList<Object[]>();
 
@@ -65,7 +65,7 @@ public class MeasurementController {
 
 			}
 
-			Double average = sum / 900;	//calluclates the average
+			Double average = sum / 900;	//Calculates the average
 
 			Date firstTime = new Date(firstTimestamp * 1000);	//Formats timestamp to date 
 
